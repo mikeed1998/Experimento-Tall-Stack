@@ -10,6 +10,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="{{ mix('css/app.css') }}" rel="stylesheet">
 
     @livewireStyles
 </head>
@@ -21,6 +22,8 @@
             </div>
         </div>
     </div>
+
+
 
     <div class="container">
         @livewire('posts')
@@ -40,6 +43,30 @@
             });
         </script>
     {{-- @endpush --}}
-
+    <script>
+        function noticesHandler() {
+            return {
+                notices: [],
+                visible: [],
+                add(notice) {
+                    notice.id = Date.now()
+                    this.notices.push(notice)
+                    this.fire(notice.id)
+                },
+                fire(id) {
+                    this.visible.push(this.notices.find(notice => notice.id == id))
+                    const timeShown = 2000 * this.visible.length
+                    setTimeout(() => {
+                        this.remove(id)
+                    }, timeShown)
+                },
+                remove(id) {
+                    const notice = this.visible.find(notice => notice.id == id)
+                    const index = this.visible.indexOf(notice)
+                    this.visible.splice(index, 1)
+                },
+            }
+        }
+    </script>
 </body>
 </html>

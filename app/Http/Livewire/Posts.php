@@ -7,7 +7,17 @@ use App\Post;
 
 class Posts extends Component
 {
+    /*
+        Atributos de la clase: 
+        $posts - almacenará los posts
+        $title - instancia del titulo de algun modelo
+        $description - instancia de la descripción de algun modelo
+        $post_id - instancia del id de algun del modelo 
+    */
     public $posts, $title, $body, $post_id;
+    /*
+        $isOpen - Variable booleana que manipulará el estado de los modles para el create/update
+    */
     public $isOpen = 0;
 
     public function render()
